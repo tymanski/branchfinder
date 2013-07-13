@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Tymoteusz Lesniak">
+	<title>Branch finder</title>
+	<link rel="stylesheet"  href="css/style.css" rel="stylesheet">
+	<script src="script/jquery-1.9.1.js"></script>
+	<script src="script/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" language="javascript" src="script/fuse.js"></script>
+	<script src="data.js"></script>
+</head>
+<body>
+	<div class="search_btn_container"><label>Search for branch: </label>
+		<input type="text" class="searchBtn" onKeyPress="searchFuzy(event);" id="search_input" placeholder="name, keyword etc" value=""></input> 
+		<div class="go_btn" onClick="goToBranch();">Go to branch!</div>
+	</div>
+	<div id="data-container"></div>
+	<script type="text/javascript">
+		var container;
+		var searchInput;
+		var result = new Array();
+
+		var options = {
+		  keys: ['name', 'path', 'keywords'],   // keys to search in
+		  id: 'id'                  // return a list of identifiers only
+		}
+
+		var f = new Fuse(data, options);
+
+		$(document).ready(function(){
+			container = document.getElementById("data-container");
+			searchInput = document.getElementById("search_input");
+			prepareData();
+			//prepareDisplay(data);
+			document.getElementById("search_input").focus();
+		});
+
+		function prepareData() {
+			for (var i = 0; i < data.length; i++) {
+				data[i].id = i;
+  			}
+		}
+
+		function prepareDisplay(dataSource) {
+			for (var i = 0; i < dataSource.length; i++) {
+				container.innerHTML = container.innerHTML + addNode(data[i],i,i);
+  			}
+		}
+		
+		function setactive (elem) {
+			$(container).children().removeClass('active');
+			$(elem).addClass("active");
+		}
+
+		function setactivefirst () {
+			$(container).children().removeClass('active');
+			$(container).children().first().addClass("active");
+		}
+
+		function addNode(elem,i,active) {
+			if (active == 0) {
+				active = " active";
+			} else active = "";
+			return '<div class="results'+active+'" onMouseOver="setactive(this);">'
+							+'<div class="result_button" onClick="goToBranch('+i+');"> <img class="arrow" src="img/arrow.jpg"/>'
+								+'<div class="name">'+elem.name+'</div>'
+								+'<div class="path">'+elem.path+'</div>'
+								+'<div style="clear:both"></div>'
+							+'</div>'
+					+'</div>';
+		}
+
+		function uniqueArray(inArray) {
+			out = new Array();
+			for (var i = 0; i < inArray.length; i++) {
+				if (jQuery.inArray(inArray[i],out)) {
+					out.push(inArray[i]);
+				}
+			}
+			return out;
+		}
+
+		function searchFuzy(event) {
+			query = searchInput.value;
+		    result = f.search(query);
+			result = uniqueArray(result);
+
+			container.innerHTML = '';
+			for (var i = 0; (i < result.length) && i<10; i++) {
+				container.innerHTML = container.innerHTML + addNode(data[result[i]],result[i],i);
+			}
+
+			if (event.keyCode == 13) {
+				if (result.length > 0 ) {
+					console.log(result);
+					goToBranch();
+				}
+			}
+			$(container).children().first().addClass("active");
+		};
+
+		function goToBranch(el) {console.log(result);
+			el = typeof el !== 'undefined' ? el : 0;
+
+			if (result.length > 0) {
+				
+				self.location = linkBase + data[result[el]].path;
+			}
+		}
+	</script>
+</body>
+</html>

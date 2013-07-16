@@ -1,3 +1,52 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 body {
     background: #fff;
     background: -moz-linear-gradient(top, rgba(112,176,224,1) 0px, rgba(201,225,243,1) 45px, rgba(210,230,245,0.7) 100px, rgba(255,255,255,0) 200px); /* FF3.6+ */
@@ -23,9 +72,13 @@ body {
     font-family: verdana;
 }
 
+.search_input_container label{
+    vertical-align: middle;
+}
+
+
 .searchInput[type=text]
 {
-
     border: 1px solid #CCCCCC;
     border-radius: 3px 3px 3px 3px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1) inset;
@@ -48,30 +101,28 @@ body {
     outline: none;
 }
 
-
 /* 
  * Result row
  */
+.data-container {
+    margin-bottom: 20px;
+}
 
 .result_button {
 
-    -moz-box-shadow: 3px 4px 0px 0px #595959;
-    -webkit-box-shadow: 3px 4px 0px 0px #595959;
-    box-shadow: 4px 4px 10px -3px #595959;
-    
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #999999));
-    background:-moz-linear-gradient(top, #ededed 5%, #999999 100%);
-    background:-webkit-linear-gradient(top, #ededed 5%, #999999 100%);
-    background:-o-linear-gradient(top, #ededed 5%, #999999 100%);
-    background:-ms-linear-gradient(top, #ededed 5%, #999999 100%);
-    background:linear-gradient(to bottom, #ededed 5%, #999999 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#999999',GradientType=0);
-    
-    background-color:#ededed;
-
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    border-radius:5px;
+        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9));
+        background:-moz-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+        background:-webkit-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+        background:-o-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+        background:-ms-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%);
+        background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9',GradientType=0);
+        
+        background-color:#f9f9f9;
+        
+        -moz-border-radius:6px;
+        -webkit-border-radius:6px;
+        border-radius:6px;
     
     border:1px solid #595959;
     
@@ -79,7 +130,7 @@ body {
     color:#000;
     font-size:16px;
     font-weight:bold;
-    padding:12px 44px;
+    padding:6px 15px;
     margin: 0px auto;
     text-decoration:none;
     font-family:verdana;
@@ -113,32 +164,59 @@ body {
     display:block;
     left: -53px;
     position: absolute;
-    top: 7px;
+    top: 6px;
 }
 
 .results {
     margin: 10px 0;
-    padding: 0 70px;
+    padding: 0 00px;
 }
 
 .results .name {
-    float:left;
     font-weight: bold;
-    width:200px;
-    font-size: 16px;
+    width:230px;
+    font-size: 14px;
     margin-right: 15px;
 }
 
 .results .path {
-    float:left;
-    font-size: 12px;
-    text-shadow: none;
+    font-family: courier;
+    font-size: 11px;
     font-weight: normal;
+    line-height: 21px;
+    text-shadow: none;
+    vertical-align: middle;
+    padding-top:5px;
+    line-height: 1.4;
 }
 
 .button_wrapper {
     margin: 0 auto;
 }
+
+.options {
+    position: absolute;
+    right: -80px;
+    top: 10px;
+    display: none;
+    width: 64px;
+    height: 64px;
+}
+
+.button_container {
+    margin: 0 auto;
+    position: relative;
+    width: 940px;
+}
+
+.options img {
+    width: 32px;
+}
+
+.active .options {
+    display: none;
+}
+
 
 /* 
  * "Go to branch" button
@@ -169,7 +247,7 @@ body {
     display:inline-block;
     color:#ffffff;
     font-family:arial;
-    font-size:13px;
+    font-size:15px;
     font-weight:bold;
     padding:6px 24px;
     text-decoration:none;
@@ -198,5 +276,20 @@ body {
     top:1px;
 }
 
+/**
+ * Info box
+ */
 
+.info {
+    height:50px;
+    width: 800px;
+    margin: 0 auto;
+    color: #ccc;
+    text-align: center;
+    font-size:12px;
+    font-family: arial;
+}
 
+.author {
+    font-size:10px;
+}

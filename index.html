@@ -8,16 +8,16 @@
 	<title>Branch finder</title>
 	<link rel="stylesheet"  href="css/style.css" rel="stylesheet">
 	<script src="script/jquery-1.9.1.js"></script>
-	<script src="script/jquery-ui-1.10.3.custom.js"></script>
 	<script type="text/javascript" language="javascript" src="script/fuse.js"></script>
 	<script src="data.js"></script>
 </head>
 <body>
 	<div class="search_input_container"><label>Search for branch: </label>
-		<input type="text" class="searchInput" onKeyPress="searchFuzy(event);" id="search_input" placeholder="name, keyword etc" value=""></input> 
+		<input type="text" class="searchInput" onKeyUp="searchFuzy(event);" id="search_input" placeholder="name, keyword etc" value=""></input> 
 		<div class="go_btn" onClick="goToBranch();">Go to branch!</div>
 	</div>
-	<div id="data-container"></div>
+	<div id="data-container" class="data-container"></div>
+	<div class="info" id="info"></div>
 	<script type="text/javascript">
 		var container;
 		var searchInput;
@@ -26,7 +26,7 @@
 		var options = {
 		  keys: ['name', 'path', 'keywords'],   // keys to search in
 		  id: 'id'                  // return a list of identifiers only
-		}
+		};
 
 		var f = new Fuse(data, options);
 
@@ -34,7 +34,7 @@
 			container = document.getElementById("data-container");
 			searchInput = document.getElementById("search_input");
 			prepareData();
-			//prepareDisplay(data);
+			prepareInfo();
 			document.getElementById("search_input").focus();
 		});
 
@@ -48,6 +48,11 @@
 			for (var i = 0; i < dataSource.length; i++) {
 				container.innerHTML = container.innerHTML + addNode(data[i],i,i);
   			}
+		}
+
+		function prepareInfo() {
+			content = "Total entries: "+data.length + '<br/><span class="author"></span>';
+			$('#info').html(content);
 		}
 		
 		function setactive (elem) {
@@ -65,28 +70,37 @@
 				active = " active";
 			} else active = "";
 			return '<div class="results'+active+'" onMouseOver="setactive(this);">'
+						+'<div class="button_container">'
 							+'<div class="result_button" onClick="goToBranch('+i+');"> <img class="arrow" src="img/arrow.jpg"/>'
 								+'<div class="name">'+elem.name+'</div>'
 								+'<div class="path">'+elem.path+'</div>'
 								+'<div style="clear:both"></div>'
 							+'</div>'
+							+'<div class="options" onclick="copyToClipboard(\''+elem.path+'\')"><img src="img/clipboard.jpg" alt="copy to clipboard"/></div>'
+						+'</div>'
 					+'</div>';
 		}
 
-		function uniqueArray(inArray) {
-			out = new Array();
-			for (var i = 0; i < inArray.length; i++) {
-				if (jQuery.inArray(inArray[i],out)) {
-					out.push(inArray[i]);
-				}
+		function eliminateDuplicates(arr) {
+			var i,
+			len=arr.length,
+		  	out=[],
+		  	obj={};
+
+		 	for (i=0;i<len;i++) {
+			 	obj[arr[i]]=0;
 			}
-			return out;
+		 	for (i in obj) {
+		 		out.push(i);
+		 	}
+
+		 	return out;
 		}
 
 		function searchFuzy(event) {
 			query = searchInput.value;
-		    result = f.search(query);
-			result = uniqueArray(result);
+		    result = f.search(query); 
+			result = eliminateDuplicates(result);//uniqueArray(result);
 
 			container.innerHTML = '';
 			for (var i = 0; (i < result.length) && i<10; i++) {
@@ -104,12 +118,15 @@
 
 		function goToBranch(el) {console.log(result);
 			el = typeof el !== 'undefined' ? el : 0;
-
 			if (result.length > 0) {
-				
 				self.location = linkBase + data[result[el]].path;
 			}
 		}
+
+		function copyToClipboard (text) {
+		  window.prompt ("Copy to clipboard: Ctrl+C, Enter", text);
+		}
+
 	</script>
 </body>
 </html>

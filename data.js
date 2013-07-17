@@ -10,16 +10,25 @@ var data = [
 	{
 		name		: "bob marley",
 		path		: "/pages/bob/marley",
-		keywords	: ""
+		keywords	: "",
+        wwwDev      : "",
+        wwwTest     : "",
+        wwwProd     : ""
 	},
 	{
 		name		: "Bob dylan",
 		path		: "other/websites/dylan",
-		keywords	: "show"
+		keywords	: "show",
+        wwwDev      : "",
+        wwwTest     : "",
+        wwwProd     : ""
 	},
 	{
 		name		: "backstreet boys",
 		path		: "/other/musics/bb",
-		keywords	: "red, blue"
+		keywords	: "red, blue",
+        wwwDev      : "",
+        wwwTest     : "",
+        wwwProd     : ""
 	}
 ]

@@ -69,6 +69,18 @@
 			if (active == 0) {
 				active = " active";
 			} else active = "";
+			options = '';
+
+			if (elem.wwwDev) {
+				options += '<a href="'+elem.wwwDev+'"><img src="img/but_dev.png"/></a> ';
+			}
+			if (elem.wwwTest) {
+				options += '<a href="'+elem.wwwTest+'"><img src="img/but_test.png"/></a> ';
+			}
+			if (elem.wwwProd) {
+				options += '<a href="'+elem.wwwProd+'"><img src="img/but_prod.png"/></a>';
+			}
+
 			return '<div class="results'+active+'" onMouseOver="setactive(this);">'
 						+'<div class="button_container">'
 							+'<div class="result_button" onClick="goToBranch('+i+');"> <img class="arrow" src="img/arrow.jpg"/>'
@@ -76,7 +88,9 @@
 								+'<div class="path">'+elem.path+'</div>'
 								+'<div style="clear:both"></div>'
 							+'</div>'
-							+'<div class="options" onclick="copyToClipboard(\''+elem.path+'\')"><img src="img/clipboard.jpg" alt="copy to clipboard"/></div>'
+							+'<div class="options" onclick="">'
+								+options
+							+'</div>'
 						+'</div>'
 					+'</div>';
 		}
@@ -117,9 +131,10 @@
 		};
 
 		function goToBranch(el) {console.log(result);
-			el = typeof el !== 'undefined' ? el : 0;
+			el = typeof el !== 'undefined' ? el : result[0];
 			if (result.length > 0) {
-				self.location = linkBase + data[result[el]].path;
+				//self.location = linkBase + data[el].path;
+				alert(data[el].path)
 			}
 		}
 

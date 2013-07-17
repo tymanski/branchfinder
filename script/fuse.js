@@ -48,7 +48,7 @@
 
             // At what point does the match algorithm give up. A threshold of '0.0' requires a perfect match
             // (of both letters and location), a threshold of '1.0' would match anything.
-            MATCH_THRESHOLD = options.threshold || 0.4,
+            MATCH_THRESHOLD = options.threshold || 0.6,
 
 
             pattern = options.caseSensitive ? pattern : pattern.toLowerCase(),

@@ -1,7 +1,7 @@
 Branchfinder
 ============
 
-A simple tool for searching branches and redirecting to them. Based on JavaScript FUSE.js search and JavaScript Array as data source.
+A simple tool for searching projects and redirecting to them. Based on JavaScript FUSE.js search and JavaScript Array as data source.
 
 INSTALLATION
 ------------
